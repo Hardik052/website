@@ -1,0 +1,36 @@
+<div id="<%= dom_id product %>">
+  <p>
+    <strong>Product name:</strong>
+    <%= product.product_name %>
+  </p>
+
+  <p>
+    <strong>Product price:</strong>
+    <%= product.product_price %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= product.category_id %>
+  </p>
+
+  <%= form_for @product, html: { multipart: true } do |form| %>
+  <p>
+    <strong><%= form.label :product_image %></strong>
+    <%= form.file_field :product_image %>
+  </p>
+  <%= form.submit "Upload Image" %>
+<% end %>
+
+  <p>
+    <strong>Product color:</strong>
+    <%= product.product_color %>
+  </p>
+
+  <p>
+    <strong>Product size:</strong>
+    <%= product.product_size %>
+  </p>
+  </div>
+
+</div>
