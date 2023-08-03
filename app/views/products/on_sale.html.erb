@@ -1,0 +1,8 @@
+<!-- app/views/products/on_sale.html.erb -->
+<h1>Products on Sale</h1>
+
+<% @products.each do |product| %>
+  <div class="product">
+    <%= link_to product.product_name, product_path(product) %>
+  </div>
+<% end %>

@@ -1,11 +1,21 @@
+# app/controllers/products_controller.rb
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :set_product, only: %i[show edit update destroy]
+
+  def new_products
+    @products = Product.where("created_at >= ?", 3.days.ago)
+  end
+
+  def recently_updated_products
+    @products = Product.where("updated_at >= ?", 3.days.ago)
+  end
 
   # GET /products or /products.json
   def index
     @products = Product.all
   end
 
+  # GET /products/1 or /products/1.json
   def show
     @categories = Category.includes(:products).all
   end
@@ -17,6 +27,11 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+  end
+
+  # GET /products/on_sale
+  def on_sale
+    @products = Product.where(on_sale: true)
   end
 
   # POST /products or /products.json
