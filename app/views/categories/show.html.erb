@@ -1,5 +1,5 @@
-
-<h1>Welcome to Our Online Store</h1>
+<!-- app/views/categories/show.html.erb -->
+<h1>Products in <%= @category.name %> Category</h1>
 
 <div class="row">
   <% @products.each do |product| %>
@@ -13,12 +13,4 @@
       </div>
     </div>
   <% end %>
-</div>
-<div class="category-links">
-  <h3>Categories:</h3>
-  <ul>
-    <% Category.all.each do |category| %>
-      <li><%= link_to category.name, category_path(category) %></li>
-    <% end %>
-  </ul>
 </div>

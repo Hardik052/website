@@ -3,26 +3,27 @@
     <strong>Product name:</strong>
     <%= product.product_name %>
   </p>
-
   <p>
     <strong>Product price:</strong>
     <%= product.product_price %>
   </p>
-
   <p>
     <strong>Category:</strong>
-    <%= product.category_id %>
+    <%= product.category.name %>
   </p>
-
   <p>
     <strong>Product color:</strong>
     <%= product.product_color %>
   </p>
-
   <p>
     <strong>Product size:</strong>
     <%= product.product_size %>
   </p>
-  </div>
-
+  <!-- Display the uploaded product image (if available) -->
+  <% if product.product_image.attached? %>
+    <div>
+      <strong>Product Image:</strong>
+      <%= image_tag rails_blob_url(product.product_image) %>
+    </div>
+  <% end %>
 </div>

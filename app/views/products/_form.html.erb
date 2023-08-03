@@ -1,8 +1,7 @@
-<%= form_with(model: product) do |form| %>
+<%= form_with(model: product, html: { multipart: true }) do |form| %>
   <% if product.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
-
       <ul>
         <% product.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -15,22 +14,31 @@
     <%= form.label :product_name, style: "display: block" %>
     <%= form.text_field :product_name %>
   </div>
-
   <div>
     <%= form.label :product_price, style: "display: block" %>
     <%= form.text_field :product_price %>
   </div>
-
   <div>
     <%= form.label :product_color, style: "display: block" %>
     <%= form.text_field :product_color %>
   </div>
-
   <div>
     <%= form.label :product_size, style: "display: block" %>
     <%= form.text_field :product_size %>
   </div>
+  <p>
+    <strong><%= form.label :product_image %></strong>
+    <%= form.file_field :product_image %>
+  </p>
 
+  <div class="field">
+    <%= form.label :category_id %>
+    <%= form.collection_select :category_id, Category.all, :id, :name %>
+  </div>
+
+  <div>
+    <%= link_to "Back to products", products_path %>
+  </div>
   <div>
     <%= form.submit %>
   </div>

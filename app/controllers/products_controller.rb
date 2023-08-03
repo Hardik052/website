@@ -6,8 +6,8 @@ class ProductsController < ApplicationController
     @products = Product.all
   end
 
-  # GET /products/1 or /products/1.json
   def show
+    @categories = Category.includes(:products).all
   end
 
   # GET /products/new

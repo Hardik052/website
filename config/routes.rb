@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   end
   resources :products, only: [:new, :create]
   resources :products
+  resources :categories, only: [:new, :create, :show]
   get 'home/about'
   root 'home#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -3,6 +3,18 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.2"
 
+gem 'image_processing'
+
+gem 'devise'
+
+
+gem 'bootstrap', '~> 5.3.0.alpha3'
+
+
+
+gem 'faker'
+
+
 gem "rails", "~> 7.0.6"
 
 gem "sprockets-rails"
