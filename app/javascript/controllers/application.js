@@ -1,4 +1,6 @@
-import { Application } from "@hotwired/stimulus"
+// app/javascript/application.js
+import { Turbo } from "@hotwired/turbo-rails"
+Turbo.session.drive = false
 
 const application = Application.start()
 

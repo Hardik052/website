@@ -8,6 +8,17 @@
         <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
+  <% if user_signed_in? %>
+  Signed in as: <%= current_user.email %>
+  <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
+<% else %>
+  <%= link_to 'Sign up', new_user_registration_path %> |
+  <%= link_to 'Log in', new_user_session_path %>
+<% end %>
+<div id="cart-link">
+    <%= link_to 'Shopping Cart', show_cart_path %>
+  </div>
+
 
    <%= render 'home/header'%>
   <br><br>

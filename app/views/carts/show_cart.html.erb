@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Your Shopping Cart</h1>
+
+  <% if @cart_items.present? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart_items.each do |product_id, quantity| %>
+          <tr>
+            <td><%= Product.find(product_id).product_name %></td>
+            <td>
+              <%= form_tag update_quantity_carts_path, method: :put do %>
+                <%= hidden_field_tag :product_id, product_id %>
+                <%= number_field_tag :quantity, quantity, class: 'form-control', min: 1 %>
+                <%= submit_tag 'Update', class: 'btn btn-primary btn-sm' %>
+              <% end %>
+            </td>
+            <td>
+  <%= link_to 'Remove', remove_from_cart_carts_path(product_id: product_id),
+              method: :delete, data: { confirm: 'Are you sure?' },
+              class: 'btn btn-danger btn-sm', remote: true %>
+</td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="text-right">
+      <%= link_to 'Continue Shopping', products_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Checkout', '#', class: 'btn btn-primary' %>
+    </div>
+  <% else %>
+    <p>Your shopping cart is empty.</p>
+  <% end %>
+</div>

@@ -110,4 +110,14 @@ class ProductsController < ApplicationController
   def product_params
     params.require(:product).permit(:product_name, :product_price, :category_id, :product_image, :product_color, :product_size, :product_description, :on_sale)
   end
+
+  def add_to_cart
+    @product = Product.find(params[:product_id])
+    session[:cart] ||= {}
+    product_id = @product.id
+    session[:cart][product_id] ||= 0
+    session[:cart][product_id] += 1
+
+    redirect_to products_path, notice: 'Product added to cart!'
+  end
 end
