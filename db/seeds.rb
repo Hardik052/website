@@ -12,7 +12,7 @@ categories.each { |category| Category.create(name: category) }
 
 # Seed products with placeholder image URLs from Faker::LoremFlickr
 categories.each do |category|
-  10.times do
+  100.times do
     product = Product.create(
       product_name: Faker::Commerce.product_name,
       product_price: Faker::Commerce.price(range: 10..100),

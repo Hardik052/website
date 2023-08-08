@@ -10,16 +10,19 @@ class ProductsController < ApplicationController
     when 'new'
       @products = @products.where('created_at >= ?', 3.days.ago)
     when 'recently_updated'
-      @products = @products.where('updated_at >= ?', 3.days.ago).where.not('created_at >= ?', 3.days.ago)
+      @products = @products.where('updated_at >= ?', 3.days.ago)
+                           .where.not('created_at >= ?', 3.days.ago)
+
     end
 
-    @products = @products.page(params[:page]).per(5)  # Display 5 products per page
+    @paginated_products = @products.page(params[:page]).per(2)  # Display 5 products per page
 
     respond_to do |format|
       format.html  # index.html.erb
-      format.json { render json: @products }
+      format.json { render json: @paginated_products }
     end
   end
+
 
   def show
     @categories = Category.includes(:products).all
