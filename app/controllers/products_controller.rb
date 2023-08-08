@@ -35,7 +35,6 @@ class ProductsController < ApplicationController
       format.json { render json: @products }
     end
   end
-
   def show
     @categories = Category.includes(:products).all
   end
