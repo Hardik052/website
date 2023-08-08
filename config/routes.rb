@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   resources :categories do
     resources :products
   end
-  resources :products, only: [:new, :create]
+  resources :products, only: [:index]
+
   resources :categories, only: [:new, :create, :show]
   get 'home/about'
   root 'home#index'

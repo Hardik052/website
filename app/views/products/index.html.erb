@@ -2,9 +2,10 @@
 
 <h1>Products</h1>
 
-<%= link_to "All Products", products_path %>
-<%= link_to "New Products", products_path(filter: "new") %>
-<%= link_to "Recently Updated Products", products_path(filter: "recently_updated") %>
+<%= link_to 'All Products', products_path %>
+<%= link_to 'On Sale', products_path(filter: 'on_sale') %>
+<%= link_to 'New Products', products_path(filter: 'new') %>
+<%= link_to 'Recently Updated', products_path(filter: 'recently_updated') %>
 
 <div id="products">
   <% @products.each do |product| %>
@@ -16,3 +17,5 @@
 </div>
 
 <%= link_to "New product", new_product_path %>
+
+<%= paginate @products %>

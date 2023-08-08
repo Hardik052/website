@@ -1,40 +1,37 @@
-# app/controllers/products_controller.rb
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
-  def new_products
-    @products = Product.where("created_at >= ?", 3.days.ago)
-  end
-
-  def recently_updated_products
-    @products = Product.where("updated_at >= ?", 3.days.ago)
-  end
-
-  # GET /products or /products.json
   def index
     @products = Product.all
+
+    case params[:filter]
+    when 'on_sale'
+      @products = @products.where(on_sale: true)
+    when 'new'
+      @products = @products.where('created_at >= ?', 3.days.ago)
+    when 'recently_updated'
+      @products = @products.where('updated_at >= ?', 3.days.ago).where.not('created_at >= ?', 3.days.ago)
+    end
+
+    @products = @products.page(params[:page]).per(5)  # Display 5 products per page
+
+    respond_to do |format|
+      format.html  # index.html.erb
+      format.json { render json: @products }
+    end
   end
 
-  # GET /products/1 or /products/1.json
   def show
     @categories = Category.includes(:products).all
   end
 
-  # GET /products/new
   def new
     @product = Product.new
   end
 
-  # GET /products/1/edit
   def edit
   end
 
-  # GET /products/on_sale
-  def on_sale
-    @products = Product.where(on_sale: true)
-  end
-
-  # POST /products or /products.json
   def create
     @product = Product.new(product_params)
 
@@ -49,7 +46,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1 or /products/1.json
   def update
     respond_to do |format|
       if @product.update(product_params)
@@ -62,7 +58,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1 or /products/1.json
   def destroy
     @product.destroy
 
@@ -73,13 +68,12 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params.require(:product).permit(:product_name, :product_price, :category_id, :product_image, :product_color, :product_size)
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:product_name, :product_price, :category_id, :product_image, :product_color, :product_size)
+  end
 end
