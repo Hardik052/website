@@ -1,5 +1,3 @@
-# db/seeds.rb
-
 require 'faker'
 
 # Delete existing data
@@ -10,7 +8,7 @@ Category.delete_all
 categories = %w[Ball Bat Jersey IPL]
 categories.each { |category| Category.create(name: category) }
 
-# Seed products with placeholder image URLs from Faker::LoremFlickr
+# Seed products with placeholder image URLs
 categories.each do |category|
   100.times do
     product = Product.create(
@@ -19,7 +17,8 @@ categories.each do |category|
       category: Category.find_by(name: category),
       product_color: Faker::Commerce.color,
       product_size: Faker::Commerce.material,
+      on_sale: Faker::Boolean.boolean,
+      product_description: Faker::Lorem.paragraph
     )
   end
 end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

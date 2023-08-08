@@ -8,7 +8,6 @@ gem 'image_processing'
 gem 'devise'
 
 gem 'activeadmin'
-gem 'kaminari'
 
 
 gem 'bootstrap', '~> 5.3.0.alpha3'

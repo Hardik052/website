@@ -1,11 +1,16 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Products</h1>
+<%= form_with(url: products_path, method: "get") do |form| %>
+  <%= form.text_field :keyword, placeholder: "Search by keyword..." %>
+  <%= form.collection_select :category_id, Category.all, :id, :name, { include_blank: true }, { class: "select2" } %>
+  <%= form.submit "Search" %>
+<% end %>
 
-<%= link_to 'All Products', products_path %>
-<%= link_to 'On Sale', products_path(filter: 'on_sale') %>
-<%= link_to 'New Products', products_path(filter: 'new') %>
-<%= link_to 'Recently Updated', products_path(filter: 'recently_updated') %>
+
+<%= link_to "All Products", products_path %>
+<%= link_to "New Products", products_path(filter: "new") %>
+<%= link_to "Recently Updated Products", products_path(filter: "recently_updated") %>
 
 <div id="products">
   <% @products.each do |product| %>
@@ -18,5 +23,4 @@
 
 <%= link_to "New product", new_product_path %>
 
-<%= paginate @paginated_products %>
-
+<%= paginate @products %>

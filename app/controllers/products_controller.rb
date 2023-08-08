@@ -1,28 +1,40 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
+  def new_products
+    @products = Product.where("created_at >= ?", 3.days.ago)
+  end
+
+  def recently_updated_products
+    @products = Product.where("updated_at >= ?", 3.days.ago)
+  end
+
   def index
     @products = Product.all
 
-    case params[:filter]
-    when 'on_sale'
-      @products = @products.where(on_sale: true)
-    when 'new'
-      @products = @products.where('created_at >= ?', 3.days.ago)
-    when 'recently_updated'
-      @products = @products.where('updated_at >= ?', 3.days.ago)
-                           .where.not('created_at >= ?', 3.days.ago)
-
+    if params[:keyword].present?
+      @products = @products.where("product_name LIKE ? OR product_description LIKE ?", "%#{params[:keyword]}%", "%#{params[:keyword]}%")
     end
 
-    @paginated_products = @products.page(params[:page]).per(2)  # Display 5 products per page
+    if params[:category_id].present?
+      @products = @products.where(category_id: params[:category_id])
+    end
+
+    if params[:filter] == 'on_sale'
+      @products = @products.where(on_sale: true)
+    elsif params[:filter] == 'new'
+      @products = @products.where('created_at >= ?', 3.days.ago)
+    elsif params[:filter] == 'recently_updated'
+      @products = @products.where('updated_at >= ?', 3.days.ago).where.not('created_at >= ?', 3.days.ago)
+    end
+
+    @products = @products.page(params[:page]).per(10)  # Display 10 products per page
 
     respond_to do |format|
       format.html  # index.html.erb
-      format.json { render json: @paginated_products }
+      format.json { render json: @products }
     end
   end
-
 
   def show
     @categories = Category.includes(:products).all
@@ -33,6 +45,10 @@ class ProductsController < ApplicationController
   end
 
   def edit
+  end
+
+  def on_sale
+    @products = Product.where(on_sale: true)
   end
 
   def create
@@ -70,6 +86,22 @@ class ProductsController < ApplicationController
     end
   end
 
+  def search
+    @products = Product.all
+
+    if params[:keyword].present?
+      @products = @products.where("product_name LIKE ? OR product_description LIKE ?", "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+    end
+
+    if params[:category_id].present?
+      @products = @products.where(category_id: params[:category_id])
+    end
+
+    @products = @products.page(params[:page]).per(5)
+
+    render :index
+  end
+
   private
 
   def set_product
@@ -77,6 +109,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:product_name, :product_price, :category_id, :product_image, :product_color, :product_size)
+    params.require(:product).permit(:product_name, :product_price, :category_id, :product_image, :product_color, :product_size, :product_description, :on_sale)
   end
 end

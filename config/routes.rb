@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :products do
+   get :search, on: :collection
     collection do
       get 'on_sale'
       get 'new_products'
@@ -10,8 +11,7 @@ Rails.application.routes.draw do
   resources :categories do
     resources :products
   end
-  resources :products, only: [:index]
-
+  resources :products, only: [:new, :create]
   resources :categories, only: [:new, :create, :show]
   get 'home/about'
   root 'home#index'
