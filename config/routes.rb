@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  get 'checkout', to: 'carts#checkout', as: :checkout
+  resources :orders, only: :create
+
   put '/carts/update_quantity', to: 'carts#update_quantity', as: :update_quantity_carts
   delete '/carts/remove_from_cart', to: 'carts#remove_from_cart', as: :remove_from_cart
 

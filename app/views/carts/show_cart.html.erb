@@ -22,7 +22,7 @@
               <% end %>
             </td>
             <td>
-  <%= link_to 'Remove', remove_from_cart_carts_path(product_id: product_id),
+  <%= button_to 'Remove', remove_from_cart_carts_path(product_id: product_id),
               method: :delete, data: { confirm: 'Are you sure?' },
               class: 'btn btn-danger btn-sm', remote: true %>
 </td>
@@ -34,7 +34,8 @@
 
     <div class="text-right">
       <%= link_to 'Continue Shopping', products_path, class: 'btn btn-secondary' %>
-      <%= link_to 'Checkout', '#', class: 'btn btn-primary' %>
+      <%= link_to 'Checkout', checkout_path, class: 'btn btn-primary' %>
+
     </div>
   <% else %>
     <p>Your shopping cart is empty.</p>

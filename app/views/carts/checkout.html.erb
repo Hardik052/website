@@ -1,0 +1,38 @@
+<div class="container">
+  <h1>Checkout</h1>
+
+  <% if @cart_items.present? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart_items.each do |product_id, quantity| %>
+          <% product = Product.find(product_id) %>
+          <tr>
+            <td><%= product.product_name %></td>
+            <td><%= number_to_currency(product.product_price) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="text-right">
+      <%= form_for @order, url: orders_path do |f| %>
+        <div class="form-group">
+          <%= f.label :province %>
+          <%= f.text_field :province, value: (current_user&.province || ""), class: 'form-control' %>
+        </div>
+
+        <!-- Add more form fields as needed -->
+
+        <%= f.submit 'Place Order', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Your shopping cart is empty.</p>
+  <% end %>
+</div>
