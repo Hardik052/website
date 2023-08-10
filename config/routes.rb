@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  post 'cart/place_order', to: 'carts#place_order', as: :place_order
+
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

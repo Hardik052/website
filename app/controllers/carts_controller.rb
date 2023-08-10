@@ -1,4 +1,39 @@
 class CartsController < ApplicationController
+  def place_order
+
+    # Retrieve address data from the session
+
+    if user_signed_in?
+
+      Address.create!(
+
+        address: session[:address],
+
+        postal: session[:postal],
+
+        province: session[:province],
+
+        user_id: current_user.id
+
+      )
+
+    end
+
+
+
+    # Clear other relevant session data (e.g., cart)
+
+    session.delete(:cart)
+
+    session.delete(:address) # Optional: Clear the address from the session
+
+
+
+
+
+    redirect_to products_path, notice: "Order placed successfully!"
+
+  end
   GST = 5
 
   State_tax = {
