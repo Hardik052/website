@@ -1,4 +1,60 @@
 class CartsController < ApplicationController
+  GST = 5
+
+  State_tax =  {
+
+    "Alberta" => 0,
+
+    "British Columbia" => 7,
+
+    "Manitoba" => 7,
+
+    "New Brunswick" => 10,
+
+    "Newfoundland and Labrador" => 10,
+
+    "Northwest Territories" => 0,
+
+    "Nova Scotia" => 10,
+
+    "Nunavut" => 0,
+
+    "Ontario" => 8,
+
+    "Prince Edward Island" => 10,
+
+    "Quebec" => 9.975,
+
+    "Saskatchewan" => 6,
+
+    "Yukon" => 0
+
+  }
+
+  def update_cart_address
+
+    @address = params[:address]
+
+    @postal_code = params[:postal_code]
+
+    @province = params[:province]
+
+
+
+    session[:address] = @address
+
+    session[:postal_code] = @postal_code
+
+    session[:province] = @province
+
+
+
+
+    redirect_to root_path
+
+  end
+
+
   def show_cart
     @cart_items = cart_items
   end
@@ -33,6 +89,14 @@ class CartsController < ApplicationController
 
   def checkout
     @cart_items = cart_items
+    @cart_contents = session[:cart] || {}
+
+    @address = session[:address]
+
+    @postal_code = session[:postal_code]
+
+    @province = session[:province]
+
   # Call the method on the order instance
   end
 
@@ -77,5 +141,23 @@ class CartsController < ApplicationController
 
   def order_params
     params.require(:order).permit(:address, :province)
+  end
+
+  def check_out
+
+    @cart_contents = session[:cart] || {}
+
+    @address = session[:address]
+
+    @postal_code = session[:postal_code]
+
+    @province = session[:province]
+
+  end
+
+  def checkout_params
+
+    params.require(:checkout).permit(:address, :postal_code, :province)
+
   end
 end
