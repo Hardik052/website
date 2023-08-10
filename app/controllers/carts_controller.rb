@@ -30,8 +30,9 @@ class CartsController < ApplicationController
 
   def checkout
     @cart_items = cart_items
-    @order = current_user.orders.build
+  # Call the method on the order instance
   end
+
   private
 
   def calculate_totals
@@ -70,7 +71,6 @@ class CartsController < ApplicationController
   end
 
   private
-
 
   def order_params
     params.require(:order).permit(:address, :province)

@@ -2,16 +2,23 @@ class Order < ApplicationRecord
   attr_accessor :subtotal
 
   belongs_to :user
+  belongs_to :province
 
   before_create :calculate_taxes
 
-  private
+  def calculate_taxes
+    self.subtotal = total_price
+    self.tax = calculate_tax
+    self.total = subtotal + tax
+  end
 
   def calculate_taxes
-    tax_rate = TaxRate.find_by(province: self.province)
-    self.gst_amount = (self.total_price * tax_rate.gst) / 100
-    self.pst_amount = (self.total_price * tax_rate.pst) / 100
-    self.hst_amount = (self.total_price * tax_rate.hst) / 100
-    self.total_amount = self.total_price + self.gst_amount + self.pst_amount + self.hst_amount
+    tax_rate = province.tax_rate
+    self.tax_amount = total_price * (tax_rate.gst_rate + tax_rate.pst_rate + tax_rate.hst_rate)
+    self.total_amount = total_price + self.tax_amount
+  end
+
+  def total_price
+    order_items.sum { |item| item.product.price * item.quantity }
   end
 end

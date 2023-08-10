@@ -1,10 +1,6 @@
 class User < ApplicationRecord
-    has_many :orders
-    has_one :cart
-    belongs_to :province
-
-    attr_accessor :address
-    attr_accessor :province_id
+  has_many :orders
+  has_one :cart
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

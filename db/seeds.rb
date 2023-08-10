@@ -3,7 +3,8 @@ require 'faker'
 # Delete existing data
 Product.delete_all
 Category.delete_all
-
+Province.create(name: "Alberta")
+Province.create(name: "British Columbia")
 # Seed categories
 categories = %w[Ball Bat Jersey IPL]
 categories.each { |category| Category.create(name: category) }
