@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+
+  post '/process_checkout', to: 'carts#process_checkout', as: :process_checkout_cart
+
+
   get 'checkout', to: 'carts#checkout', as: :checkout
   resources :orders, only: :create
 
@@ -12,6 +16,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :carts, only: [] do
+    post 'process_checkout', on: :collection
+    post 'checkout', on: :collection
+    get 'checkout', on: :member
     get :show_cart, on: :collection
     post :update_quantity, on: :collection
     collection do
