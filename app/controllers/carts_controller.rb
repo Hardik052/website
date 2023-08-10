@@ -25,6 +25,9 @@ class CartsController < ApplicationController
   def remove_from_cart
     product_id = params[:product_id].to_i
     cart_items.delete(product_id)
+    session[:cart]= cart_items
+    puts "Updated cart items: #{cart_items}"
+
     redirect_to show_cart_path
   end
 

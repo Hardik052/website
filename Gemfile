@@ -7,6 +7,8 @@ gem 'image_processing'
 
 gem 'devise'
 
+gem 'google-cloud-storage' # for Google Cloud Storage
+
 gem 'breadcrumbs_on_rails'
 
 
