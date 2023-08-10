@@ -1,7 +1,7 @@
 ActiveAdmin.register Product do
   actions :index, :edit, :update, :create, :destroy, :new
 
-  permit_params :product_name, :product_description, :product_price, :product_image, :category_id
+  permit_params :product_name, :product_description, :product_price, :category_id
 
   filter :product_name
 
