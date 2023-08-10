@@ -1,43 +1,36 @@
-<div class="container">
-  <h1>Your Shopping Cart</h1>
+<!-- app/views/carts/show_cart.html.erb -->
+<h1>Your Cart</h1>
 
-  <% if @cart_items.present? %>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @cart_items.each do |product_id, quantity| %>
-          <tr>
-            <td><%= Product.find(product_id).product_name %></td>
-            <td>
-              <%= form_tag update_quantity_carts_path, method: :put do %>
-                <%= hidden_field_tag :product_id, product_id %>
-                <%= number_field_tag :quantity, quantity, class: 'form-control', min: 1 %>
-                <%= submit_tag 'Update', class: 'btn btn-primary btn-sm' %>
-              <% end %>
-            </td>
-            <td>
-  <%= button_to 'Remove', remove_from_cart_carts_path(product_id: product_id),
-              method: :delete, data: { confirm: 'Are you sure?' },
-              class: 'btn btn-danger btn-sm', remote: true %>
-</td>
+<table>
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Update Quantity</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cart_items.each do |product_id, quantity| %>
+      <% product = Product.find(product_id) %>
+      <tr>
+        <td><%= product.product_name %></td>
+        <td><%= quantity %></td>
+        <td><%= product.price %></td>
+        <td>
+          <%= form_tag update_quantity_carts_path, method: :put do %>
+            <%= hidden_field_tag :product_id, product_id %>
+            <%= number_field_tag :quantity, quantity, min: 1 %>
+            <%= submit_tag 'Update' %>
+          <% end %>
+        </td>
+        <td>
+          <%= button_to 'Remove', remove_from_cart_path(product_id: product_id), method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-
-    <div class="text-right">
-      <%= link_to 'Continue Shopping', products_path, class: 'btn btn-secondary' %>
-      <%= link_to 'Checkout', checkout_path, class: 'btn btn-primary' %>
-
-    </div>
-  <% else %>
-    <p>Your shopping cart is empty.</p>
-  <% end %>
-</div>
+<%= link_to 'Checkout', checkout_path, class: 'btn btn-primary' %>

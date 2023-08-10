@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :orders, only: :create
 
   put '/carts/update_quantity', to: 'carts#update_quantity', as: :update_quantity_carts
-  delete '/carts/remove_from_cart', to: 'carts#remove_from_cart', as: :remove_from_cart
+  delete 'carts/remove_from_cart', to: 'carts#remove_from_cart', as: :remove_from_cart
+
+
 
 
   post 'add_to_cart', to: 'carts#add_to_cart', as: :add_to_cart
@@ -22,7 +24,7 @@ Rails.application.routes.draw do
     get :show_cart, on: :collection
     post :update_quantity, on: :collection
     collection do
-      delete 'remove_from_cart', to: 'carts#remove_from_cart'
+      delete 'remove_from_cart'
     end
   end
 

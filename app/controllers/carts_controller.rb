@@ -30,7 +30,9 @@ class CartsController < ApplicationController
 
   def checkout
     @cart_items = cart_items
-  # Call the method on the order instance
+    @order = current_user.orders.build
+    calculate_totals
+    @order.calculate_taxes # Call the method on the order instance
   end
 
   private
