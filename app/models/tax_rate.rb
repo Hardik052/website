@@ -1,2 +1,0 @@
-class TaxRate < ApplicationRecord
-end
