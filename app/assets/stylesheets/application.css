@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+/* Media query for screens with a max-width of 768px (tablets) */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+}
+
+/* Media query for screens with a max-width of 576px (mobile devices) */
+@media (max-width: 576px) {
+  .header {
+    padding: 5px;
+    font-size: 16px;
+  }
+
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+}

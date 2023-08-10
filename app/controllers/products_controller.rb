@@ -13,19 +13,19 @@ class ProductsController < ApplicationController
     @products = Product.all
 
     if params[:keyword].present?
-      @products = @products.where("product_name LIKE ? OR product_description LIKE ?", "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+      @products = @products.where("product_name LIKE ? OR product_description LIKE ?",
+                                  "%#{params[:keyword]}%", "%#{params[:keyword]}%")
     end
 
-    if params[:category_id].present?
-      @products = @products.where(category_id: params[:category_id])
-    end
+    @products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
 
-    if params[:filter] == 'on_sale'
+    if params[:filter] == "on_sale"
       @products = @products.where(on_sale: true)
-    elsif params[:filter] == 'new'
-      @products = @products.where('created_at >= ?', 3.days.ago)
-    elsif params[:filter] == 'recently_updated'
-      @products = @products.where('updated_at >= ?', 3.days.ago).where.not('created_at >= ?', 3.days.ago)
+    elsif params[:filter] == "new"
+      @products = @products.where("created_at >= ?", 3.days.ago)
+    elsif params[:filter] == "recently_updated"
+      @products = @products.where("updated_at >= ?", 3.days.ago).where.not("created_at >= ?",
+                                                                           3.days.ago)
     end
 
     @products = @products.page(params[:page]).per(10)  # Display 10 products per page
@@ -35,6 +35,7 @@ class ProductsController < ApplicationController
       format.json { render json: @products }
     end
   end
+
   def show
     @categories = Category.includes(:products).all
   end
@@ -43,8 +44,7 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def on_sale
     @products = Product.where(on_sale: true)
@@ -55,7 +55,9 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
+        format.html do
+          redirect_to product_url(@product), notice: "Product was successfully created."
+        end
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -67,7 +69,9 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
+        format.html do
+          redirect_to product_url(@product), notice: "Product was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -89,12 +93,11 @@ class ProductsController < ApplicationController
     @products = Product.all
 
     if params[:keyword].present?
-      @products = @products.where("product_name LIKE ? OR product_description LIKE ?", "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+      @products = @products.where("product_name LIKE ? OR product_description LIKE ?",
+                                  "%#{params[:keyword]}%", "%#{params[:keyword]}%")
     end
 
-    if params[:category_id].present?
-      @products = @products.where(category_id: params[:category_id])
-    end
+    @products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
 
     @products = @products.page(params[:page]).per(5)
 
@@ -108,7 +111,8 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:product_name, :product_price, :category_id, :product_image, :product_color, :product_size, :product_description, :on_sale)
+    params.require(:product).permit(:product_name, :product_price, :category_id, :product_image,
+                                    :product_color, :product_size, :product_description, :on_sale)
   end
 
   def add_to_cart
@@ -118,11 +122,10 @@ class ProductsController < ApplicationController
     session[:cart][product_id] ||= 0
     session[:cart][product_id] += 1
 
-    redirect_to products_path, notice: 'Product added to cart!'
+    redirect_to products_path, notice: "Product added to cart!"
   end
-  private
 
   def product_params
     params.require(:product).permit(:product_name, :product_description, :category_id, :on_sale)
-end
+  end
 end

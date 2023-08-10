@@ -1,4 +1,4 @@
-require 'faker'
+require "faker"
 
 # Delete existing data
 Product.delete_all
@@ -12,12 +12,12 @@ categories.each { |category| Category.create(name: category) }
 categories.each do |category|
   100.times do
     product = Product.create(
-      product_name: Faker::Commerce.product_name,
-      product_price: Faker::Commerce.price(range: 10..100),
-      category: Category.find_by(name: category),
-      product_color: Faker::Commerce.color,
-      product_size: Faker::Commerce.material,
-      on_sale: Faker::Boolean.boolean,
+      product_name:        Faker::Commerce.product_name,
+      product_price:       Faker::Commerce.price(range: 10..100),
+      category:            Category.find_by(name: category),
+      product_color:       Faker::Commerce.color,
+      product_size:        Faker::Commerce.material,
+      on_sale:             Faker::Boolean.boolean,
       product_description: Faker::Lorem.paragraph
     )
   end
