@@ -27,8 +27,8 @@
   </div>
 
   <div class="field">
-
-
+    <%= f.label :province_id %><br />
+    <%= f.collection_select :province_id, Province.all, :id, :name, prompt: "Select a province" %>
   </div>
 
   <div class="actions">

@@ -12,22 +12,21 @@
 <%= link_to "New Products", products_path(filter: "new") %>
 <%= link_to "Recently Updated Products", products_path(filter: "recently_updated") %>
 
-<div id="products">
-  <% @products.each do |product| %>
-    <div class="product">
-      <h2><%= product.product_name %></h2>
-      <p><strong>Price:</strong> $<%= product.product_price %></p>
-      <p><strong>Category:</strong> <%= product.category.name %></p>
 
-<%= link_to "Show this product", product %>
-      <!-- Add to Cart form -->
-      <%= form_with(url: add_to_cart_path, method: :post) do |form| %>
-        <%= form.hidden_field :product_id, value: product.id %>
-        <%= form.submit "Add to Cart" %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+<% @products.each do |product| %>
+  <div class="product">
+<%= render partial: 'product_row', locals: { product: product } %>
+    <!-- Add to Cart form -->
+    <%= form_tag add_to_cart_path, method: :post do %>
+      <%= hidden_field_tag :product_id, product.id %>
+      <%= link_to "Show this product", product %>
+
+      <%= submit_tag 'Add to Cart' %>
+    <% end %>
+  </div>
+<% end %>
+
+
 
 <%= link_to "New product", new_product_path %>
 <%= paginate @products %>

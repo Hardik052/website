@@ -120,4 +120,9 @@ class ProductsController < ApplicationController
 
     redirect_to products_path, notice: 'Product added to cart!'
   end
+  private
+
+  def product_params
+    params.require(:product).permit(:product_name, :product_description, :category_id, :on_sale)
+  end
 end
