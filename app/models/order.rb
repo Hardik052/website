@@ -8,10 +8,10 @@ class Order < ApplicationRecord
   private
 
   def calculate_taxes
-    tax_rate = TaxRate.find_by(province: self.province)
-    self.gst_amount = (self.total_price * tax_rate.gst) / 100
-    self.pst_amount = (self.total_price * tax_rate.pst) / 100
-    self.hst_amount = (self.total_price * tax_rate.hst) / 100
-    self.total_amount = self.total_price + self.gst_amount + self.pst_amount + self.hst_amount
+    tax_rate = TaxRate.find_by(province:)
+    self.gst_amount = (total_price * tax_rate.gst) / 100
+    self.pst_amount = (total_price * tax_rate.pst) / 100
+    self.hst_amount = (total_price * tax_rate.hst) / 100
+    self.total_amount = total_price + gst_amount + pst_amount + hst_amount
   end
 end

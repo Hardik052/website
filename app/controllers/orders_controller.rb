@@ -3,11 +3,11 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      flash[:notice] = 'Order placed successfully.'
+      flash[:notice] = "Order placed successfully."
       session[:cart] = [] # Clear the cart after successful order
       redirect_to root_path
     else
-      render 'carts/checkout'
+      render "carts/checkout"
     end
   end
 
