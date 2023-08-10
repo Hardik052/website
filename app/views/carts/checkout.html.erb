@@ -49,9 +49,16 @@
 
       <!-- Place Order button -->
     </div>
+
+    <%= form_tag place_order_path, method: :post do %>
+
+    <%= submit_tag "Place Order" %>
+
+  <% end %>
   <% else %>
     <%= render "address_form" %>
   <% end %>
+
 <% end %>
 
 
