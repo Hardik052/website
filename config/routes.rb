@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 
 
   post 'update_cart_address', to: 'carts#update_cart_address', as: :update_cart_address
