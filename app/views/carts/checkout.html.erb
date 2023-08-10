@@ -8,26 +8,50 @@
       </tr>
     </thead>
     <tbody>
+    <% total_price = 0%>
       <% @cart_items.each do |product_id, quantity| %>
         <% product = Product.find(product_id) %>
         <tr>
           <td><%= product.product_name %></td>
           <td><%= quantity %></td>
           <td><%= number_to_currency(product.product_price * quantity) %></td>
+          <% total_price += product.product_price * quantity %>
         </tr>
       <% end %>
     </tbody>
   </table>
 
-  <%= form_with(model: @order, url: process_checkout_cart_path, method: :post) do |f| %>
-    <div class="form-group">
-      <%= f.label :address %>
-      <%= f.text_field :address, class: 'form-control' %>
-    </div>
-    <!-- Other form fields -->
+<% if @address.present? %>
+    <!-- Display shipping information -->
+  GST: <%= number_to_currency(CartsController::GST * total_price /100 )%>
 
-    <%= f.submit 'Place Order', class: 'btn btn-primary' %>
+  <br>
+
+
+
+    HST/PST: <%= number_to_currency(CartsController::State_tax[@province] *total_price / 100)%>
+
+
+
+  <br>
+
+  <br>
+
+  Total: <%=  number_to_currency(total_price +CartsController::State_tax[@province] *total_price / 100 + CartsController::GST * total_price /100 ) %>
+
+  </div>
+
+    <div class="container">
+      <h3>Shipping Address</h3>
+      <p><strong>Address:</strong> <%= @address %></p>
+      <p><strong>Postal Code:</strong> <%= @postal_code %></p>
+      <p><strong>Province:</strong> <%= @province %></p>
+
+      <!-- Place Order button -->
+    </div>
+  <% else %>
+    <%= render "address_form" %>
   <% end %>
-<% else %>
-  <p>Your shopping cart is empty.</p>
 <% end %>
+
+

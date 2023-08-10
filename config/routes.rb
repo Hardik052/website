@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
 
+  post 'update_cart_address', to: 'carts#update_cart_address', as: :update_cart_address
+
+
   post '/process_checkout', to: 'carts#process_checkout', as: :process_checkout_cart
 
 

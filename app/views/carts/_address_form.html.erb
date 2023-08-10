@@ -1,0 +1,23 @@
+<%= form_tag update_cart_address_path, method: :post do %>
+
+  <%= label_tag :address, "Address" %>
+
+  <%= text_field_tag :address, @address %>
+
+
+
+  <%= label_tag :postal_code, "Postal Code" %>
+
+  <%= text_field_tag :postal_code, @postal_code %>
+
+
+
+  <%= label_tag :province, "Province" %>
+
+  <%= select_tag :province, options_for_select(["Newfoundland and Labrador", "Nova Scotia", "Prince Edward Island", "New Brunswick", "Ontario", "Quebec", "Manitoba", "Saskatchewan", "Alberta", "British Columbia"]), selected: @province %>
+
+
+
+  <%= submit_tag "Update Address" %>
+
+  <% end %>

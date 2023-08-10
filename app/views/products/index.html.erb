@@ -1,33 +1,48 @@
-<!-- app/views/products/index.html.erb -->
-<p style="color: green"><%= notice %></p>
+<div class="container mt-4">
+  <p class="text-success"><%= notice %></p>
 
-<h1>Products</h1>
-<%= form_with(url: products_path, method: "get") do |form| %>
-  <%= form.text_field :keyword, placeholder: "Search by keyword..." %>
-  <%= form.collection_select :category_id, Category.all, :id, :name, { include_blank: true }, { class: "select2" } %>
-  <%= form.submit "Search" %>
-<% end %>
+  <h1>Products</h1>
 
-<%= link_to "All Products", products_path %>
-<%= link_to "New Products", products_path(filter: "new") %>
-<%= link_to "Recently Updated Products", products_path(filter: "recently_updated") %>
+  <%= form_with(url: products_path, method: "get", class: "mb-4") do |form| %>
+    <div class="input-group">
+      <%= form.text_field :keyword, placeholder: "Search by keyword...", class: "form-control" %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, { include_blank: true }, { class: "form-control select2" } %>
+      <div class="input-group-append">
+        <%= form.submit "Search", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
 
+  <div class="mb-3">
+    <%= link_to "All Products", products_path, class: "btn btn-secondary mr-2" %>
+    <%= link_to "New Products", products_path(filter: "new"), class: "btn btn-secondary mr-2" %>
+    <%= link_to "Recently Updated Products", products_path(filter: "recently_updated"), class: "btn btn-secondary" %>
+  </div>
 
-<% @products.each do |product| %>
-  <div class="product">
-<%= render partial: 'product_row', locals: { product: product } %>
-    <!-- Add to Cart form -->
-    <%= form_tag add_to_cart_path, method: :post do %>
-      <%= hidden_field_tag :product_id, product.id %>
-      <%= link_to "Show this product", product %>
-
-      <%= submit_tag 'Add to Cart' %>
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <%= render partial: 'product_row', locals: { product: product } %>
+            <div class="text-center mt-3">
+              <%= link_to "Show this product", product, class: "btn btn-primary" %>
+              <%= form_tag add_to_cart_path, method: :post, class: "d-inline" do %>
+                <%= hidden_field_tag :product_id, product.id %>
+                <%= submit_tag 'Add to Cart', class: "btn btn-success ml-2" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
-<% end %>
 
+  <div class="text-center">
+    <%= link_to "New product", new_product_path, class: "btn btn-primary mt-3" %>
+  </div>
 
-
-<%= link_to "New product", new_product_path %>
-<%= paginate @products %>
-
+  <div class="text-center mt-3">
+    <%= paginate @products, class: "pagination" %>
+  </div>
+</div>
