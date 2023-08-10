@@ -10,4 +10,7 @@ class Product < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["category_id", "created_at", "id", "on_sale", "product_color", "product_description", "product_image", "product_name", "product_price", "product_size", "updated_at"]
   end
+  validates :product_name,presence: true
+
+  validates :product_price,  numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 end
