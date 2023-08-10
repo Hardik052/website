@@ -90,6 +90,8 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.7, < 3)
       sassc-rails (>= 2.0.0)
+    breadcrumbs_on_rails (4.1.0)
+      railties (>= 5.0)
     builder (3.2.4)
     capybara (3.39.2)
       addressable
@@ -299,6 +301,7 @@ DEPENDENCIES
   activeadmin
   bootsnap
   bootstrap (~> 5.3.0.alpha3)
+  breadcrumbs_on_rails
   capybara
   debug
   devise

@@ -7,6 +7,9 @@ gem 'image_processing'
 
 gem 'devise'
 
+gem 'breadcrumbs_on_rails'
+
+
 gem 'activeadmin'
 
 
